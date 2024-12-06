@@ -1,40 +1,31 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { createTask } from '../servicios/service'; // Asegúrate de que esta función está importada correctamente
+import { createTask } from '../servicios/service'; 
 
 export default function TaskForm({ show, handleClose, fetchTasks }) {
-  // Estado para los campos del formulario
   const [taskName, setTaskName] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
 
-  // Función para manejar el cambio en el input de nombre
   const handleTaskNameChange = (event) => setTaskName(event.target.value);
 
-  // Función para manejar el cambio en el input de descripción
   const handleTaskDescriptionChange = (event) => setTaskDescription(event.target.value);
 
-  // Función para manejar el envío del formulario
   const handleSaveTask = async () => {
-    // Crear un objeto con los datos de la nueva tarea
     const newTask = {
       title: taskName,
       description: taskDescription,
-      completed: false, // Por defecto, la tarea no está completada
+      completed: false,
     };
 
     try {
-      // Enviar la nueva tarea al backend
       await createTask(newTask);
 
-      // Limpiar el formulario después de enviar
       setTaskName('');
       setTaskDescription('');
 
-      // Llamar a fetchTasks para actualizar la lista de tareas
       fetchTasks();
 
-      // Cerrar el modal
       handleClose();
     } catch (error) {
       console.error('Error adding task:', error);

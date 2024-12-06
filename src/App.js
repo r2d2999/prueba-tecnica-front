@@ -1,6 +1,4 @@
-import logo from './logo.svg';
 import './App.css';
-import Task from './Task';
 import TaskList from './components/TaskList';
 
 function App() {

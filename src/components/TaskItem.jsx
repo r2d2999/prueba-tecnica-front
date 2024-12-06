@@ -1,40 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { updateTask } from '../servicios/service'; // Asegúrate de tener esta función
+import { updateTask } from '../servicios/service'; 
 
 export default function TaskItem({ show, handleClose, task, fetchTasks }) {
-  const [completed, setCompleted] = useState(false); // Estado para el checkbox
-  const [description, setDescription] = useState(''); // Estado para la descripción
+  const [completed, setCompleted] = useState(false); 
+  const [description, setDescription] = useState(''); 
 
-  // Usamos useEffect para configurar el estado cuando el componente se monta
   useEffect(() => {
     if (task) {
-      setCompleted(task.completed); // Inicializa el checkbox según el valor de completed
-      setDescription(task.description || ''); // Inicializa la descripción de la tarea
+      setCompleted(task.completed); 
+      setDescription(task.description || ''); 
     }
-  }, [task]); // Se ejecuta cada vez que cambian los props, por ejemplo cuando se pasa una tarea
+  }, [task]); 
 
-  // Función para manejar el cambio del checkbox
   const handleCheckboxChange = () => {
-    setCompleted(!completed); // Cambiar el estado del checkbox
+    setCompleted(!completed); 
   };
 
-  // Función para manejar el cambio en la descripción
   const handleDescriptionChange = (event) => {
-    setDescription(event.target.value); // Actualiza el estado de la descripción
+    setDescription(event.target.value); 
   };
 
-  // Función para guardar la tarea actualizada
   const handleSave = async () => {
     try {
       const updatedTask = {
-        description, // Enviamos la descripción actualizada
-        completed, // Enviamos el estado del checkbox
+        description, 
+        completed,
       };
-      await updateTask(task.id, updatedTask); // Actualizar la tarea en la base de datos
-      fetchTasks(); // Recargar las tareas después de la actualización
-      handleClose(); // Cerrar el modal
+      await updateTask(task.id, updatedTask); 
+      fetchTasks(); 
+      handleClose(); 
     } catch (error) {
       console.error('Error updating task:', error);
     }
@@ -54,8 +50,8 @@ export default function TaskItem({ show, handleClose, task, fetchTasks }) {
             <input
               type="checkbox"
               id="completed"
-              checked={completed} // El estado del checkbox depende de `completed`
-              onChange={handleCheckboxChange} // Actualiza el estado cuando cambia el checkbox
+              checked={completed} 
+              onChange={handleCheckboxChange} 
             />
           </div>
           <div className="mb-3">
@@ -66,8 +62,8 @@ export default function TaskItem({ show, handleClose, task, fetchTasks }) {
               id="description"
               className="form-control"
               rows="3"
-              value={description} // El valor de la descripción depende del estado
-              onChange={handleDescriptionChange} // Actualiza la descripción cuando cambia el valor
+              value={description} 
+              onChange={handleDescriptionChange} 
               placeholder="Enter task description"
             />
           </div>
